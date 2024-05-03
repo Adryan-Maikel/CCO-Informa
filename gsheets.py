@@ -4,7 +4,7 @@ from gspread import authorize
 import os
 import json
 
-debug = True
+debug = False
 if debug:
     CLIENT = authorize(
         Credentials.from_service_account_file("credentials.json", scopes=[
