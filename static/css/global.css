@@ -1,0 +1,26 @@
+:root{--white: #EDEDED;--dark: #1F1A2A;--cursor: default;}
+
+.bg-dark{background-color: var(--dark);color: var(--white);}
+.bg-white{background-color: var(--white);color: var(--dark);}
+
+*{margin: 0;padding: 0;box-sizing: border-box;cursor: var(--cursor);}
+h1,h2{display: none;}
+body{width: 100vw;height: 100vh;}
+header,footer,input,button{width: 100%;}
+input,button{background-color: var(--white);color: var(--dark);}
+input{border: none;outline: none;}
+input:disabled{opacity: .5;pointer-events: none;}
+button{border-color: var(--white);outline-color: var(--white);}
+.icons button{width: 25px;height: 25px;}
+button i{pointer-events: none;font-weight: bold;}
+
+.row,.col,.center{display: flex;align-items: center;}
+.row{flex-direction: row;}
+.col{flex-direction: column;}
+.center{justify-content: center;align-items: center;}
+.around{justify-content: space-around;}
+.color-red{color: #FF0000;}
+.color-green{color: #328f32;}
+::-webkit-scrollbar{width: 8px;}
+::-webkit-scrollbar-thumb{border-radius: 4px;background-color: var(--dark)}
+::-webkit-scrollbar-track{background-color: var(--white)}
