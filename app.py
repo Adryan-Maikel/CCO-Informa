@@ -1,15 +1,15 @@
 from flask import Flask, render_template
 from gsheets import INFORMATIONS as INFO
 
-APP = Flask(__name__)
+app = Flask(__name__)
 
 
-@APP.route("/")
+@app.route("/")
 def index() -> str:
     return render_template("index.html")
 
 
-@APP.route("/edit/<table>")
+@app.route("/edit/<table>")
 def edit_table(table: str) -> str:
     if table == "sheets":
         return render_template("edit.html")
@@ -24,4 +24,4 @@ def edit_table(table: str) -> str:
 
 
 if __name__ == "__main__":
-    APP.run()
+    app.run()
