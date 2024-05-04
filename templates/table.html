@@ -1,0 +1,20 @@
+<table border="1px" class="bg-white">
+    <caption class="{{ table }} bg-white"><h2>{{ table }}</h2></caption>
+    <thead>
+        <tr><td class="id">Id</td>{% for col in cols %}<td>{{ col.title() }}</td>{% endfor %}<td class="acoes">Ações</td></tr>
+    </thead>
+    <tbody>{% for row in rows %}
+        <tr id="row-{{ row[0] }}">{% for cell in row %}{% if loop.first %}
+            <td>{{ cell }}</td>{% else %}
+            <td><input type="text" value="{{ cell }}" disabled></td>{% endif %}{% endfor %}
+            <td class="buttons icons center">
+                <button id="edit-{{ row[0] }}"><i class="fa-solid fa-pencil"></i></button>
+                <button id="del-{{ row[0] }}"><i class="fa-solid fa-trash"></i></button>
+                <div id="btns-r{{row[0]}}" class="buttons icons center">
+                    <button id="edit-{{ row[0] }}"><i class="fa-solid fa-check"></i></button>
+                    <button id="del-{{ row[0] }}"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </td>
+        </tr>{% endfor %}
+    </tbody>
+</table>

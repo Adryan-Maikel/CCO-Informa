@@ -6,8 +6,9 @@
     <title>Editar Tabela</title>
     <link rel="stylesheet" href="/static/css/edit.css">
     <link rel="shortcut icon" href="/stacit/favicon.png" type="image/x-icon">
+    <script type="module" src="/static/js/global.js"></script>
+    <script src="/static/js/sheet.js" defer></script>
     <script src="/static/js/font-awesome.js"></script>
-    <script type="module" src="/static/js/edit.js" defer></script>
 </head>
 <body>
     <header><h1>*CCO Informa*</h1></header>
@@ -21,8 +22,11 @@
                 <li><button id="sentidos">Sentidos</button></li>
                 <li><button id="operadores">Operadores</button></li>
             </ul>
-            <iframe src="/edit/ocorrencias" frameborder="0"></iframe>
-
+        </section>
+        <section class="col">
+            <div class="table">
+                {{ table | safe }}
+            </div>
         </section>
     </main>
 

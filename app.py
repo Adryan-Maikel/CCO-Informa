@@ -11,17 +11,17 @@ def index() -> str:
 
 @app.route("/edit/<table>")
 def edit_table(table: str) -> str:
-    if table == "sheets":
-        return render_template("edit.html")
     ROWS = list(enumerate(INFO[table]["get"]()))
     COLS = [table.title()]
     if table == "operadores":
         ROWS = [[_id, *data] for _id, data in enumerate(INFO[table]["get"]())]
         COLS = ["Operadores", "Cracha"]
 
-    return render_template("sheet.html", table=table.title(),
-                           rows=ROWS, cols=COLS)
+    _table = render_template("table.html", table=table,
+                             rows=ROWS, cols=COLS)
+
+    return render_template("edit.html", table=_table)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

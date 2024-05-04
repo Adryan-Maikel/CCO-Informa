@@ -38,6 +38,10 @@ const CURSORS = {
     default:"/static/assets/normal.cur",danger:"/static/assets/unavailable.cur",link:"/static/assets/link.cur",
     move:"/static/assets/move.cur",scroll_x:"/static/assets/horizontal.cur",scroll_y:"/static/assets/vertical.cur"
 }
+const set_cursor= function(cursor){
+    return document.documentElement.style.setProperty("--cursor", `url(${cursor}), auto`);
+}
+
 /* CURSOR */
 const buttons = document.querySelectorAll("button")
 const inputs = document.querySelectorAll("input")
@@ -46,24 +50,24 @@ const load_cursor = (configurations) => {
     // document.addEventListener("contextmenu", (event)=>event.preventDefault())
     if(!configurations.cursor_personalizado)return;
 
-    document.documentElement.style.setProperty("--cursor", `url(${CURSORS.default}), auto`);
+    // document.documentElement.style.setProperty("--cursor", `url(${CURSORS.default}), auto`);
+    set_cursor(CURSORS.default)
     document.addEventListener("mousedown", (event)=>{if(event.button!=0)event.preventDefault()});
     for(const button of buttons){
-        button.addEventListener("mouseenter", ()=>{
-            document.documentElement.style.setProperty("--cursor", `url(${CURSORS.link}), auto`);
+        button.addEventListener("mouseenter", (event)=>{set_cursor(CURSORS.link)
+            event.target.addEventListener("mouseout", ()=>set_cursor(CURSORS.default))
         })
-        button.addEventListener("mouseout", ()=>
-            document.documentElement.style.setProperty("--cursor", `url(${CURSORS.default}), auto`))
     }
     for(const input of inputs){
-        input.addEventListener("mouseenter", (event)=>{
-            if(event.target.disabled)
+        if(input.disabled){
+            const parent = input.parentElement;
+            parent.addEventListener("mouseenter", ()=>{
                 document.documentElement.style.setProperty("--cursor", `url(${CURSORS.danger}), auto`)
-            
-        })
-        input.addEventListener("mouseout", ()=>{
-            document.documentElement.style.setProperty("--cursor", `url(${CURSORS.default}), auto`)            
-        })
+                parent.addEventListener("mouseout", ()=>{
+                        document.documentElement.style.setProperty("--cursor", `url(${CURSORS.default}), auto`)            
+                })
+            })
+        }
     }
 }
 
