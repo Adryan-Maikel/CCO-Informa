@@ -6,13 +6,13 @@
     <tbody>{% for row in rows %}
         <tr id="row-{{ row[0] }}">{% for cell in row %}{% if loop.first %}
             <td>{{ cell }}</td>{% else %}
-            <td><input type="text" value="{{ cell }}" disabled></td>{% endif %}{% endfor %}
+            <td><input type="text" id="input-col{{ loop.index-1 }}-row{{ row[0] }}" value="{{ cell }}" disabled></td>{% endif %}{% endfor %}
             <td class="buttons icons center">
-                <button id="edit-{{ row[0] }}"><i class="fa-solid fa-pencil"></i></button>
-                <button id="del-{{ row[0] }}"><i class="fa-solid fa-trash"></i></button>
+                <button id="edit-{{ row[0] }}" class="edit"><i class="fa-solid fa-pencil"></i></button>
+                <button id="del-{{ row[0] }}" class="del"><i class="fa-solid fa-trash"></i></button>
                 <div id="btns-r{{row[0]}}" class="buttons icons center">
-                    <button id="edit-{{ row[0] }}"><i class="fa-solid fa-check"></i></button>
-                    <button id="del-{{ row[0] }}"><i class="fa-solid fa-xmark"></i></button>
+                    <button id="confirm-{{ row[0] }}"><i class="fa-solid fa-check"></i></button>
+                    <button id="cancel-{{ row[0] }}"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </td>
         </tr>{% endfor %}

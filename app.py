@@ -9,18 +9,27 @@ def index() -> str:
     return render_template("index.html")
 
 
-@app.route("/edit/<table>")
-def edit_table(table: str) -> str:
-    ROWS = list(enumerate(INFO[table]["get"]()))
-    COLS = [table.title()]
-    if table == "operadores":
-        ROWS = [[_id, *data] for _id, data in enumerate(INFO[table]["get"]())]
+@app.route("/sheets/<sheet>")
+def open(sheet: str) -> str:
+    if sheet not in INFO.keys():
+        return render_template("error.html")
+    ROWS = list(enumerate(INFO[sheet]["get"](), 1))
+    COLS = [sheet.title()]
+    if sheet == "operadores":
+        ROWS = [[_id, *data] for _id, data in enumerate(INFO[sheet]["get"](), 1)]
         COLS = ["Operadores", "Cracha"]
 
-    _table = render_template("table.html", table=table,
+    _sheet = render_template("table.html", table=sheet,
                              rows=ROWS, cols=COLS)
 
-    return render_template("edit.html", table=_table)
+    return render_template("edit.html", table=_sheet)
+
+
+@app.route("/edit/<sheet>")
+def edit(sheet):
+    if sheet not in INFO.keys():
+        return render_template("error.html")
+    
 
 
 if __name__ == "__main__":

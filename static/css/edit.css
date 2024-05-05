@@ -8,10 +8,11 @@ main section:nth-child(2){padding-bottom: 5px;border: 1px solid var(--dark);bord
 /* iframe{width: 100%;height: calc(100vh - 25px);border: 1px solid var(--dark);border-top: none;} */
 header,footer{display: none;}
 
-.table{width: 445px;height: 600px;position: relative;overflow-x: hidden;overflow-y: overlay;z-index: 11;}
+.table{width: calc(100% - 10px);height: calc(100vh - 50px);position: relative;overflow-x: hidden;overflow-y: overlay;z-index: 11;}
 
 table{width: 100%;border-color: var(--dark);position: relative;z-index: 10;}
 table thead tr td{text-align: center;font-size: 18px;font-weight: 700;padding: 2px 5px;}
+table tbody tr.remove td{border-color: #FF0000}
 table tbody tr td:first-child,table caption.Operadores~tbody tr td:nth-child(3) input{text-align: right;}
 table tbody tr td{padding: 0 2px}
 
