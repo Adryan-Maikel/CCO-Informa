@@ -1,9 +1,6 @@
-import{ load_cookie_configurations, update_cookie_configurations, toogle_option_menu, load_dark_mode }from"./global.js";
+import{ configurations, load_cookie_configurations, update_cookie_configurations, toogle_option_menu, load_dark_mode }from"./global.js";
 
 window.document.title = "* CCO INFORMA *"
-
-var configurations = load_cookie_configurations();
-load_dark_mode(configurations);
 
 const menu_config = document.getElementById("menu-configurations");
 const confirm_button = document.getElementById("confirm-config");

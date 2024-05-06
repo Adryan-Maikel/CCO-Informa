@@ -1,12 +1,12 @@
 const sheet = document.querySelector("caption").className.replace(" bg-white", "");
+const cols = document.querySelectorAll("thead tr td");
 
 /* Botões onde escolhe a Sheet */
-const menu_buttons = document.querySelectorAll("li button")
-menu_buttons.forEach(button => {
-    button.parentElement.classList.remove("active");
-    if(document.querySelector(`caption.${button.id}`))
-        button.parentElement.classList.add("active");
-    button.addEventListener("click", (event)=>window.location.href = `/sheets/${event.target.id}`);
+document.querySelectorAll("li button").forEach(button=>{
+    document.querySelector(`caption.${button.id}`)
+    ?button.parentElement.classList.add("active")
+    :button.parentElement.classList.remove("active");
+    button.addEventListener("click", event=>window.location.href = `/sheets/${event.target.id}`);
 })
 
 /* Botões de adicionar nova linha */
@@ -15,6 +15,10 @@ document.querySelectorAll("button.add").forEach(button=>button.addEventListener(
 const inputs_value = {};
 
 function add_row(event){
+    const div_revel = document.querySelector("div.add-row.revel");
+
+    if(div_revel)return div_revel.closest("tr").querySelector("input").focus();
+
     const row = event.target.id.replace("add-", "");
     const div_buttons = document.querySelector(`#btns-a${row}`);
     div_buttons.classList.add("revel");
@@ -27,8 +31,36 @@ function add_row(event){
         input.value = "";
     });
     inputs[0].focus();
-    const button_cancel = div_buttons.querySelector(`#cancel-${row}`);
-    button_cancel.addEventListener("click", cancel_add)
+    div_buttons.querySelector(`#cancel-${row}`).addEventListener("click", cancel_add)
+    div_buttons.querySelector(`#bottom-${row}`).addEventListener("click", confirm_add)
+    div_buttons.querySelector(`#top-${row}`).addEventListener("click", confirm_add)
+}
+
+function confirm_add(event){
+    const target = event.target;
+
+    const form = document.createElement("form");
+    form.setAttribute("action", `/add/${sheet}`);
+    form.setAttribute("method", "post");
+    const names = ["direction","row"];
+    target.id.split("-").forEach((name, i)=>{
+        const _input = document.createElement("input");
+        _input.setAttribute("name", names[i]);
+        _input.setAttribute("value", name);
+        form.appendChild(_input)
+    });
+    const inputs = target.closest("tr").querySelectorAll("input")
+    cols.forEach((col, i)=>{
+        const text = col.textContent.toLocaleLowerCase();
+        if(text == "id"||text == "ações")
+            return;
+        const __input = document.createElement("input");
+        __input.setAttribute("name", text);
+        __input.setAttribute("value", inputs[i-1].value);
+        form.appendChild(__input)
+    });
+    document.body.appendChild(form);
+    form.submit();
 }
 
 function cancel_add(event){
@@ -47,11 +79,14 @@ function cancel_add(event){
 /* Botões de deletar uma linha */
 document.querySelectorAll("button.del").forEach(input=>input.addEventListener("click", delete_row))
 function delete_row(event){
-    event.target.closest("tr").classList.add("remove");
-
-    const row = event.target.id.replace("del-", "");
-    event.target.parentElement.querySelector("button.add").setAttribute("disabled", "true");
-    const div_buttons = document.querySelector(`#btns-r${row}`);
+    const div_revel = document.querySelector("div.confirmation.revel");
+    if(div_revel)return div_revel.closest("tr").querySelector("input").focus();
+    const target = event.target;
+    const tr = target.closest("tr");
+    tr.classList.add("remove");
+    const row = tr.id.replace("row-", "");
+    target.parentElement.querySelector("button.add").setAttribute("disabled", "true");
+    const div_buttons = target.parentElement.querySelector(`#btns-r${row}`);
     div_buttons.querySelector(`#cancel-${row}`).addEventListener("click", cancel_del);
     div_buttons.querySelector(`#confirm-${row}`).addEventListener("click", confirm_del);
     div_buttons.classList.add("revel");
@@ -87,93 +122,80 @@ function confirm_del(event){
 
     event.target.removeEventListener("click", confirm_del);
 }
-/* Botões de editar uma celula */
+/* Botões de editar uma linha */
 const buttons_edit = document.querySelectorAll(".edit");
-buttons_edit.forEach(button => button.addEventListener("click", edit_row));
+buttons_edit.forEach(button=>button.addEventListener("click", edit_row));
 
 function edit_row(event){
+    const div_revel = document.querySelector("div.confirmation.revel");
+    if(div_revel)return div_revel.closest("tr").querySelector("input").focus();
+
     const row = event.target.id.replace("edit-", "");
     const inputs = document.querySelectorAll(`#row-${row} td input`);
-    inputs.forEach(input=>{
-        input.removeAttribute("disabled");
-        inputs_value[input.id] = input.value;
-    });
+    inputs.forEach(input=>{input.removeAttribute("disabled");inputs_value[input.id] = input.value;});
+    inputs[0].focus();
     const div_buttons = document.querySelector(`#btns-r${row}`);
     div_buttons.classList.add("revel");
+    event.target.parentElement.querySelector("button.add").setAttribute("disabled", "true");
     div_buttons.querySelector(`#confirm-${row}`).addEventListener("click", confirm_edit);
     div_buttons.querySelector(`#cancel-${row}`).addEventListener("click", cancel_edit);
 }
 
-function confirm_edit(){
-    const row = getRowId(this);
+function confirm_edit(event){
+    const row = event.target.id.split("-")[1];
     const inputs = document.querySelectorAll(`#row-${row} td input`);
 
-    var not_edit = false;
-    inputs.forEach(input => {
-        if(input.value!==inputs_value[input.id]){
-            not_edit = true;
-            return;
-        }
-    })
-    if(not_edit){
-        const form = document.createElement("form");
-        form.setAttribute("action", `/edit/${sheet}`);
-        form.setAttribute("method", "post");
-        
-        var _input = document.createElement("input");
-        _input.setAttribute("name", "row");_input.setAttribute("value", row);
-        form.appendChild(_input);
-    
-        const tds = document.querySelectorAll("thead tr td");
-        const cols = [];
-        for(const td of tds){
-            const col = td.textContent.toLocaleLowerCase();
-            if(col == "id"||col == "ações")
-                continue;
-            cols.push(col);
-        }
-        for(let i = 0; i < cols.length; i++){
-            const _input = document.createElement("input");
-            _input.setAttribute("name", cols[i]);
-            _input.setAttribute("value", inputs[i].value);
-            form.appendChild(_input);
-        }
-    
-        document.body.appendChild(form);
-        form.submit();
-
+    var edited = false;
+    inputs.forEach(input=>{if(input.value!==inputs_value[input.id])return edited = true})
+    if(!edited){
+        inputs.forEach(input=>input.setAttribute("disabled", "true"));
         const div_buttons = document.querySelector(`#btns-r${row}`);
         div_buttons.classList.remove("revel");
-
-        document.querySelector(`#row-${row}`).classList.add("confirm")
-
         div_buttons.querySelector(`#confirm-${row}`).removeEventListener("click", confirm_edit);
         div_buttons.querySelector(`#cancel-${row}`).removeEventListener("click", cancel_edit);
         return;
     }
-    inputs.forEach(input => {
-        input.setAttribute("disabled", "true");
-    })
+    const form = document.createElement("form");
+    form.setAttribute("action", `/edit/${sheet}`);
+    form.setAttribute("method", "post");
+    
+    const _input = document.createElement("input");
+    _input.setAttribute("name", "row");
+    _input.setAttribute("value", row);
+    form.appendChild(_input);
+
+    cols.forEach((col, i)=>{
+        const text = col.textContent.toLocaleLowerCase();
+        if(text == "id"||text == "ações")
+            return;
+        const __input = document.createElement("input");
+        __input.setAttribute("name", text);
+        __input.setAttribute("value", inputs[i - 1].value);
+        form.appendChild(__input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+
     const div_buttons = document.querySelector(`#btns-r${row}`);
     div_buttons.classList.remove("revel");
+
+    document.querySelector(`#row-${row}`).classList.add("confirm");
+
     div_buttons.querySelector(`#confirm-${row}`).removeEventListener("click", confirm_edit);
     div_buttons.querySelector(`#cancel-${row}`).removeEventListener("click", cancel_edit);
     return;
 }
 
-function cancel_edit(){
-    const row = getRowId(this);
+function cancel_edit(event){
+    const row = event.target.id.split("-")[1];
 
     const inputs = document.querySelectorAll(`#row-${row} td input`);
     inputs.forEach(input=>input.setAttribute("disabled", "true"));
 
-    const div_buttons = document.querySelector(`#btns-r${row}`);
+    const div_buttons = event.target.parentElement;
     div_buttons.classList.remove("revel");
+    div_buttons.closest("tr").querySelector("button.add").removeAttribute("disabled");
     div_buttons.querySelector(`#confirm-${row}`).removeEventListener("click", confirm_edit);
     div_buttons.querySelector(`#cancel-${row}`).removeEventListener("click", cancel_edit);
     return;
-}
-
-function getRowId(element){
-    return element.id.split("-")[1];
 }

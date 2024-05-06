@@ -20,7 +20,7 @@ def add_cell(direction: str, row: int, col: str, value: str | int | float):
     """Função que adiciona uma celula e atribui o valor.
 
     :direction: str - Direção a qual flutuara o resto dos valores.\
-    **Direções**: **"bottom"** ou **"top"**.
+    Direções: "bottom" ou "top".
     :row: int - Número da linha da tabela. ex: 1
     :col: str - Letra da coluna. ex: "A"
     :value: str | int | float - Valor a ser inserido.
@@ -34,7 +34,7 @@ def add_cell(direction: str, row: int, col: str, value: str | int | float):
     WS_DADOS.update_acell(f"{col}{row}", value)
 
 
-def add_operator(operator: str, cracha: str) -> None:
+def add_operator(direction, row, operator: str, cracha: str) -> None:
     """Função utilizada para adicionar um operador ou um cracha.
 
     :param operator: str - Operador a ser adicionado na ultima linha.
@@ -43,8 +43,8 @@ def add_operator(operator: str, cracha: str) -> None:
     if operator and cracha and cracha.isnumeric():
         operator = operator.strip().title()
         cracha = int(cracha.strip())
-        WS_DADOS.update_acell(f"D{add_last_row('D')}", operator)
-        WS_DADOS.update_acell(f"E{add_last_row('E')}", cracha)
+        add_cell(direction=direction, row=row, col="D", value=operator)
+        add_cell(direction=direction, row=row, col="E", value=cracha)
 
 
 def update_operator(row: str, operator: str, cracha: str) -> None:
@@ -63,8 +63,8 @@ for name, col in INTERVALS:
     INFORMATIONS[name] = {
         "get": lambda _=name, col=col:
             [row[0] for row in WS_DADOS.get_values(f"{col}2:{col}")],
-        "add": lambda value, col=col:
-            WS_DADOS.update_acell(f"{col}{add_last_row(col)}", value),
+        "add": lambda direction, row, value, col=col:
+            add_cell(direction, row, col, value),
         "del": lambda row, col=col:
             WS_DADOS.cut_range(f"{col}{row+1}:{col}", f"{col}{row}:{col}"),
         "upd": lambda row, value, col=col:
@@ -73,13 +73,16 @@ for name, col in INTERVALS:
 
 INFORMATIONS["operadores"] = {
     "get": lambda: WS_DADOS.get_values("D2:E"),
-    "add": lambda operator="", cracha="": add_operator(operator, cracha),
+    "add": lambda direction, row, operator, cracha:
+        add_operator(direction, row, operator, cracha),
     "del": lambda row:
         WS_DADOS.cut_range(f"D{row+1}:E{row+1}", f"D{row}:E{row}"),
     "upd": lambda row, operator, cracha: update_operator(row, operator, cracha)
 }
 
-
+# operator="", cracha="": add_operator(operator, cracha),
+# "add": lambda value, col=col:
+#     WS_DADOS.update_acell(f"{col}{add_last_row(col)}", value),
 if __name__ == "__main__":
     # print(INFORMATIONS["problemas"]["get"]())
     # print(WS_DADOS.get_values("B2:B"))

@@ -11,8 +11,9 @@ def index() -> str:
 
 @app.route("/sheets/<sheet>")
 def open(sheet: str) -> str:
-    if sheet not in INFO.keys():
-        return render_template("error.html")
+    if sheet not in INFO:
+        ERRO = "Não deveria fazer isso."
+        return render_template("error.html", erro=ERRO)
     ROWS = list(enumerate(INFO[sheet]["get"](), 2))
     COLS = [sheet.title()]
     if sheet == "operadores":
@@ -26,9 +27,10 @@ def open(sheet: str) -> str:
 
 
 @app.route("/edit/<sheet>", methods=["POST"])
-def edit(sheet):
-    if sheet not in INFO.keys():
-        return render_template("error.html")
+def edit(sheet: str) -> str:
+    if sheet not in INFO:
+        ERRO = "Não deveria fazer isso."
+        return render_template("error.html", erro=ERRO)
     if sheet == "operadores":
         row = request.form.get("row")
         operator = request.form.get("operadores")
@@ -43,13 +45,35 @@ def edit(sheet):
 
 
 @app.route("/del/<sheet>", methods=["POST"])
-def dell(sheet):
-    if sheet not in INFO.keys():
+def dell(sheet: str) -> str:
+    if sheet not in INFO:
         return render_template("error.html")
     row = request.form.get("row")
     if not row.isnumeric():
         return render_template("error.html")
     INFO[sheet]["del"](int(row))
+    return open(sheet)
+
+
+@app.route("/add/<sheet>", methods=["post"])
+def add(sheet: str) -> str:
+    if sheet not in INFO:
+        ERRO = "Não deveria fazer isso."
+        return render_template("error.html", erro=ERRO)
+    row = request.form.get("row")
+    if not row.isnumeric():
+        ERRO = f"Row {row} não é um número."
+        return render_template("error.html", erro=ERRO)
+    direction = request.form.get("direction")
+
+    if sheet == "operadores":
+        operator = request.form.get("operadores")
+        cracha = request.form.get("cracha")
+        INFO[sheet]["add"](direction, int(row), operator, cracha)
+        return open(sheet)
+
+    value = request.form.get(sheet)
+    INFO[sheet]["add"](direction, int(row), value)
     return open(sheet)
 
 
