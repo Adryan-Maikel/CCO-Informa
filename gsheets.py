@@ -9,11 +9,29 @@ SS_DADOS = CLIENT.open_by_key("101ykzDT_qWUN_CzQ4uVyR25hTe6KERvVVOkzSGtbDNk")
 WS_DADOS = SS_DADOS.worksheet("Dados")
 
 
-def get_last_row(col: str) -> int:
+def add_last_row(col: str) -> int:
     last_row = len(WS_DADOS.col_values("ABCDE".index(col) + 1)) + 1
     if last_row > WS_DADOS.row_count:
         WS_DADOS.add_rows(1)
     return last_row
+
+
+def add_cell(direction: str, row: int, col: str, value: str | int | float):
+    """Função que adiciona uma celula e atribui o valor.
+
+    :direction: str - Direção a qual flutuara o resto dos valores.\
+    **Direções**: **"bottom"** ou **"top"**.
+    :row: int - Número da linha da tabela. ex: 1
+    :col: str - Letra da coluna. ex: "A"
+    :value: str | int | float - Valor a ser inserido.
+
+    >>> add_cell(direction="top", row=8, col="A", value=3)
+    >>> add_cell(direction="bottom", row=3, col="E", value=3)
+    """
+    if direction == "bottom":
+        row += 1
+    WS_DADOS.cut_range(f"{col}{row}:{col}", f"{col}{row+1}:{col}")
+    WS_DADOS.update_acell(f"{col}{row}", value)
 
 
 def add_operator(operator: str, cracha: str) -> None:
@@ -25,11 +43,11 @@ def add_operator(operator: str, cracha: str) -> None:
     if operator and cracha and cracha.isnumeric():
         operator = operator.strip().title()
         cracha = int(cracha.strip())
-        WS_DADOS.update_acell(f"D{get_last_row('D')}", operator)
-        WS_DADOS.update_acell(f"E{get_last_row('E')}", cracha)
+        WS_DADOS.update_acell(f"D{add_last_row('D')}", operator)
+        WS_DADOS.update_acell(f"E{add_last_row('E')}", cracha)
 
 
-def update_operator(row: int, operator: str, cracha: str) -> None:
+def update_operator(row: str, operator: str, cracha: str) -> None:
     if operator:
         operator = operator.strip().title()
         WS_DADOS.update_acell(f"D{row}", operator)
@@ -42,14 +60,13 @@ def update_operator(row: int, operator: str, cracha: str) -> None:
 INFORMATIONS = {}
 INTERVALS = [["ocorrencias", "A"], ["problemas", "B"], ["sentidos", "C"]]
 for name, col in INTERVALS:
-    print(name, col)
     INFORMATIONS[name] = {
         "get": lambda _=name, col=col:
             [row[0] for row in WS_DADOS.get_values(f"{col}2:{col}")],
         "add": lambda value, col=col:
-            WS_DADOS.update_acell(f"{col}{get_last_row(col)}", value),
+            WS_DADOS.update_acell(f"{col}{add_last_row(col)}", value),
         "del": lambda row, col=col:
-            WS_DADOS.cut_range(f"{col}{row+1}:{col}", f"{col}{row}: {col}"),
+            WS_DADOS.cut_range(f"{col}{row+1}:{col}", f"{col}{row}:{col}"),
         "upd": lambda row, value, col=col:
             WS_DADOS.update_acell(f"{col}{row}", value)
     }
@@ -64,6 +81,6 @@ INFORMATIONS["operadores"] = {
 
 
 if __name__ == "__main__":
-    print(INFORMATIONS["problemas"]["get"]())
+    # print(INFORMATIONS["problemas"]["get"]())
     # print(WS_DADOS.get_values("B2:B"))
     pass

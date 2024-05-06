@@ -6,11 +6,17 @@
     <tbody>{% for row in rows %}
         <tr id="row-{{ row[0] }}">{% for cell in row %}{% if loop.first %}
             <td>{{ cell }}</td>{% else %}
-            <td><input type="text" id="input-col{{ loop.index-1 }}-row{{ row[0] }}" value="{{ cell }}" disabled></td>{% endif %}{% endfor %}
+            <td><input type="text" id="input-col{{ loop.index-1 }}-row{{ row[0] }}" value="{{ cell }}" autocomplete="off" disabled></td>{% endif %}{% endfor %}
             <td class="buttons icons center">
+                <button id="add-{{ row[0] }}" class="add"><i class="fa-solid fa-plus"></i></button>
+                <div id="btns-a{{ row[0] }}" class="buttons icons col add-row">
+                    <button id="down-{{ row[0] }}" class=""><i class="fa-solid fa-caret-down"></i></button>
+                    <button id="up-{{ row[0] }}"><i class="fa-solid fa-caret-up"></i></button>
+                    <button id="cancel-{{ row[0] }}"><i class="fa-solid fa-xmark"></i></button>
+                </div>
                 <button id="edit-{{ row[0] }}" class="edit"><i class="fa-solid fa-pencil"></i></button>
                 <button id="del-{{ row[0] }}" class="del"><i class="fa-solid fa-trash"></i></button>
-                <div id="btns-r{{row[0]}}" class="buttons icons center">
+                <div id="btns-r{{ row[0] }}" class="buttons icons center confirmation">
                     <button id="confirm-{{ row[0] }}"><i class="fa-solid fa-check"></i></button>
                     <button id="cancel-{{ row[0] }}"><i class="fa-solid fa-xmark"></i></button>
                 </div>

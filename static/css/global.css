@@ -4,7 +4,7 @@
 .bg-white{background-color: var(--white);color: var(--dark);}
 
 *{margin: 0;padding: 0;box-sizing: border-box;cursor: var(--cursor);}
-h1,h2{display: none;}
+h1,h2,form{display: none;}
 body{width: 100vw;height: 100vh;}
 header,footer,input,button{width: 100%;}
 input,button{background-color: var(--white);color: var(--dark);}

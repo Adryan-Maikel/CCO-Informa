@@ -26,11 +26,11 @@ const toogle_option_menu=(configurations, option)=>{
 /* DARK-MODE */
 const load_dark_mode=(configurations)=>{
     if(configurations.dark_mode){
-        document.documentElement.style.setProperty("--white", "#1F1A2A")
+        document.documentElement.style.setProperty("--white", "#101b57")
         document.documentElement.style.setProperty("--dark", "#EDEDED")
     }else{
         document.documentElement.style.setProperty("--white", "#EDEDED")
-        document.documentElement.style.setProperty("--dark", "#1F1A2A")
+        document.documentElement.style.setProperty("--dark", "#101b57")
     }
 }
 
@@ -53,11 +53,18 @@ const load_cursor = (configurations) => {
     // document.documentElement.style.setProperty("--cursor", `url(${CURSORS.default}), auto`);
     set_cursor(CURSORS.default)
     document.addEventListener("mousedown", (event)=>{if(event.button!=0)event.preventDefault()});
-    for(const button of buttons){
-        button.addEventListener("mouseenter", (event)=>{set_cursor(CURSORS.link)
-            event.target.addEventListener("mouseout", ()=>set_cursor(CURSORS.default))
+    buttons.forEach(button=>{
+        button.addEventListener("mouseenter", event=>{
+            const cursor = event.target.disabled?CURSORS.danger:CURSORS.link
+            set_cursor(cursor)
         })
-    }
+    });
+    
+    // for(const button of buttons){
+    //     button.addEventListener("mouseenter", (event)=>{event.target.disabled?set_cursor(CURSORS.link):set_cursor(CURSORS.danger)
+    //         event.target.addEventListener("mouseout", ()=>set_cursor(CURSORS.default))
+    //     })
+    // }
     for(const input of inputs){
         if(input.disabled){
             const parent = input.parentElement;
