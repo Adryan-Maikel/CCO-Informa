@@ -1,6 +1,8 @@
-import{ configurations, load_cookie_configurations, update_cookie_configurations, toogle_option_menu, load_dark_mode }from"./global.js";
+import{ configurations, update_cookie_configurations, toogle_option_menu }from"./global.js";
 
-window.document.title = "* CCO INFORMA *"
+window.document.title = "INFORMA"
+
+var _configurations = configurations;
 
 const menu_config = document.getElementById("menu-configurations");
 const confirm_button = document.getElementById("confirm-config");
@@ -12,19 +14,20 @@ const span_cursor = document.getElementById("span-cursor");
 const open_config = document.getElementById("open-config");
 
 const update_color_spans = ()=>{
-    span_dark_mode.classList = configurations.dark_mode?["color-green"]:["color-red"];
-    span_cursor.classList = configurations.cursor_personalizado?["color-green"]:["color-red"];
+    console.log(configurations)
+    span_dark_mode.classList = _configurations.dark_mode?["color-green"]:["color-red"];
+    span_cursor.classList = _configurations.cursor_personalizado?["color-green"]:["color-red"];
 }
 const toogle_dark_mode = ()=>{
-    configurations = toogle_option_menu(configurations, "dark_mode");
+    _configurations = toogle_option_menu(_configurations, "dark_mode");
     update_color_spans();
 }
 const toogle_cursor=()=>{
-    configurations = toogle_option_menu(configurations, "cursor_personalizado");
+    _configurations = toogle_option_menu(_configurations, "cursor_personalizado");
     update_color_spans();
 }
 const confirm_alterations = ()=>{
-    update_cookie_configurations(configurations);
+    update_cookie_configurations(_configurations);
 }
 const cancel_alterations = ()=>{
     menu_config.classList.remove("revel");
@@ -35,8 +38,8 @@ const cancel_alterations = ()=>{
 }
 const open_config_menu = ()=>{
     menu_config.classList.add("revel");
-    update_color_spans()
-    dark_mode_button.addEventListener("click", toogle_dark_mode)
+    update_color_spans();
+    dark_mode_button.addEventListener("click", toogle_dark_mode);
     cursor_button.addEventListener("click", toogle_cursor);
     confirm_button.addEventListener("click", confirm_alterations)
     cancel_button.addEventListener("click", cancel_alterations)

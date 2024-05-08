@@ -19,7 +19,10 @@ header, footer{height: 50px;padding: 10px 0}
 #menu-configurations.revel{left: 10px;scale: 1;}
 #menu-configurations h3{width: 100%;padding: 2px 0;text-align: center;}
 .buttons span{font-weight: bold;padding-right: 2px;}
-section{width: 480px;padding: 0 10px;}
+section{
+    width: 100%;
+    padding: 0 10px;
+}
 iframe{width: 100%;height: calc(100vh - 100px);}
 
 @media(max-width: 500px){

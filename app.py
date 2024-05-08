@@ -11,13 +11,22 @@ def index() -> str:
 
 @app.route("/sheets/<sheet>")
 def open(sheet: str) -> str:
+    if sheet == "cco-informa":
+        ROWS = [[_i, *data]
+                for _i, data in enumerate(INFO[sheet]["get"](), 2)]
+        _sheet = render_template("cco-informa.html", table=sheet, rows=ROWS,
+                                 cols=INFO[sheet]["cols"](),
+                                 letters="A B C D E F G H I J K".split())
+        return _sheet
+        # return render_template("edit.html", table=_sheet)
     if sheet not in INFO:
         ERRO = "Não deveria fazer isso."
         return render_template("error.html", erro=ERRO)
     ROWS = list(enumerate(INFO[sheet]["get"](), 2))
     COLS = [sheet.title()]
     if sheet == "operadores":
-        ROWS = [[_i, *data] for _i, data in enumerate(INFO[sheet]["get"](), 2)]
+        ROWS = [[_i, *data]
+                for _i, data in enumerate(INFO[sheet]["get"](), 2)]
         COLS = ["Operadores", "Cracha"]
 
     _sheet = render_template("table.html", table=sheet,

@@ -18,7 +18,7 @@ i.fa-trash,i.fa-xmark,.color-red{color: #FF0000;}
 i.fa-check,.color-green{color: var(--green)}
 
 .mw{width: 100%;}.mw{height: 100%;}.mwh{width: 100%;height: 100%;}
-.row,.col,.center{display: flex;align-items: center;}
+.row,.col,.center{display: flex;}
 .row{flex-direction: row;}
 .col{flex-direction: column;}
 .center{justify-content: center;align-items: center;}

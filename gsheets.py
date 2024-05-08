@@ -5,8 +5,9 @@ CLIENT = authorize(
     Credentials.from_service_account_file("credentials.json", scopes=[
         "https://www.googleapis.com/auth/spreadsheets"]))
 
-SS_DADOS = CLIENT.open_by_key("101ykzDT_qWUN_CzQ4uVyR25hTe6KERvVVOkzSGtbDNk")
-WS_DADOS = SS_DADOS.worksheet("Dados")
+SS = CLIENT.open_by_key("101ykzDT_qWUN_CzQ4uVyR25hTe6KERvVVOkzSGtbDNk")
+WS_DADOS = SS.worksheet("Dados")
+WS_CCO_INFORMA = SS.worksheet("Histórico de eventos")
 
 
 def add_last_row(col: str) -> int:
@@ -76,14 +77,19 @@ INFORMATIONS["operadores"] = {
     "add": lambda direction, row, operator, cracha:
         add_operator(direction, row, operator, cracha),
     "del": lambda row:
-        WS_DADOS.cut_range(f"D{row+1}:E{row+1}", f"D{row}:E{row}"),
+        WS_DADOS.cut_range(f"D{row+1}:E", f"D{row}:E"),
     "upd": lambda row, operator, cracha: update_operator(row, operator, cracha)
 }
 
-# operator="", cracha="": add_operator(operator, cracha),
-# "add": lambda value, col=col:
-#     WS_DADOS.update_acell(f"{col}{add_last_row(col)}", value),
+INFORMATIONS["cco-informa"] = {
+    "cols": lambda: WS_CCO_INFORMA.get_values("A1:K1")[0],
+    "get": lambda: WS_CCO_INFORMA.get_values("A2:K")
+}
+
 if __name__ == "__main__":
     # print(INFORMATIONS["problemas"]["get"]())
     # print(WS_DADOS.get_values("B2:B"))
+    # data = INFORMATIONS["cco-informa"]["cols"]()
+    for i in range(len(INFORMATIONS["cco-informa"]["cols"]())):
+        print(i)
     pass

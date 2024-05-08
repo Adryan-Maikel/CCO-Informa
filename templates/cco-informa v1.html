@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCO INFORMA</title>
+    <link rel="stylesheet" href="/static/css/cco-informa.css">
+    <script type="module" src="/static/js/global.js"></script>
+    <script type="module" src="/static/js/font-awesome.js"></script>
+</head>
+<body>
+
+<div id="cco-informa" class="bg-white">
+    <div class="header">
+        <div class="row letters">
+            <div class="col id">
+            </div>{% for letter in letters %}
+            <div class="col">
+                {{ letter }}
+            </div>{% endfor %}
+        </div>
+        <div class="row">
+            <div class="col">1</div>{% for col in cols %}
+            <div class="col">
+                <strong>{{ col }}</strong>
+            </div>{% endfor %}
+        </div>
+    </div>
+    <div class="content">{% for row in rows %}
+        <div class="row">{% for cell in row %}
+            <div class="col">{% if loop.first %}
+                {{ cell }}{% else %}
+                <input type="text" value="{{ cell }}">{% endif %}
+            </div>{% endfor %}
+        </div>{% endfor %}
+    </div>
+</div>
+
+
+</body>
+</html>
