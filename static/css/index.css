@@ -24,7 +24,3 @@ section{
     padding: 0 10px;
 }
 iframe{width: 100%;height: calc(100vh - 100px);}
-
-@media(max-width: 500px){
-    section{width: calc(100% - 20px);}
-}
