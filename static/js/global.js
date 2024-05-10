@@ -7,7 +7,7 @@ function create_cookie_configurations(){
 function load_cookie_configurations(){
     return document.cookie.split(";").find(cookie=>cookie.trim().startsWith("configurations="))
     ?JSON.parse(decodeURIComponent(document.cookie.split(";").find(cookie=>cookie.trim().startsWith("configurations=")).split("=")[1]))
-    :create_cookie_configurations
+    :create_cookie_configurations()
 }
 function update_cookie_configurations(new_configurations){
     document.cookie=`configurations=${JSON.stringify(new_configurations)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
@@ -36,9 +36,7 @@ const CURSORS={
     default:"/static/assets/normal.cur",danger:"/static/assets/unavailable.cur",link:"/static/assets/link.cur",
     move:"/static/assets/move.cur",scroll_x:"/static/assets/horizontal.cur",scroll_y:"/static/assets/vertical.cur"
 }
-function set_cursor(cursor){
-    return document.documentElement.style.setProperty("--cursor", `url(${cursor}), auto`);
-}
+function set_cursor(cursor){return document.documentElement.style.setProperty("--cursor", `url(${cursor}), auto`)}
 
 function load_cursor(configurations){
     if(!configurations.cursor_personalizado)return;
@@ -47,6 +45,7 @@ function load_cursor(configurations){
     document.querySelectorAll("button").forEach(button=>{
         button.addEventListener("mouseenter", event=>{
             set_cursor(event.target.disabled?CURSORS.danger:CURSORS.link);
+            if(event.target.classList.contains("expand"))set_cursor(CURSORS.scroll_x);
             button.addEventListener("mouseout", _=>set_cursor(CURSORS.default))
         })
     });

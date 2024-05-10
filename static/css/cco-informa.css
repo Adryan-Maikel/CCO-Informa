@@ -1,31 +1,19 @@
 @import "./global.css";
-:root{
-    /* --c-_: 30px;
-    --c-A: 80px;
-    --c-B: 80px;
-    --c-C: 55px;
-    --c-D: 57px;
-    --c-E: 84px;
-    --c-F: 47px;
-    --c-G: 63px;
-    --c-H: 312px;
-    --c-I: 215px;
-    --c-J: 400px;
-    --c-K: 80px; */
-    /* --sum: calc(var(--c-_) + var(--c-A) + var(--c-B) + var(--c-C) + var(--c-D) + var(--c-E) + var(--c-F) + var(--c-G) + var(--c-H) + var(--c-I) + var(--c-J) + var(--c-K)); */
-}
-body{
+body, ul li{
     overflow: hidden;
 }
 cco-informa{
     position: absolute;
-    height: calc(100% - 20px);
+    height: 100%;
     overflow-x: scroll;
     border: 1px solid var(--dark);
     padding: 8px;
 }
+ul.letters{
+    height: 22px;
+}
 li .id{
-    width: calc(var(--_) - 2px);
+    width: calc(var(--_));
     height: calc(100% - 4px);
     position: absolute;
     top: 2px;
@@ -33,6 +21,19 @@ li .id{
     background: var(--dark);
     opacity: 0.1;
 }
+li span{position: relative;display: inline-block;width: calc(100% - 12px);height: 100%;}
+li button.expand{
+    position: absolute;
+    background: none;
+    top: -1px;
+    width: 15px;
+    height: 100%;
+    z-index: 15;
+    border: none;
+}
+button.expand i{color: var(--dark);}
+li div.id ~ button.expand {transform: translateX(-1px);}
+i.fa-up-right-and-down-left-from-center{font-size: 10px;rotate: 45deg}
 header{
     width: auto;
     display: block;
@@ -49,7 +50,7 @@ header ul:nth-child(3) li{
 section{
     position: absolute;
     top: 80px;
-    height: calc(100vh - 125px);
+    height: calc(100vh - 100px);
     overflow-y: scroll;
     overflow-x: hidden;
 }

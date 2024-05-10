@@ -6,7 +6,7 @@
     <title>CCO INFORMA</title>
     <link rel="stylesheet" href="/static/css/cco-informa.css">
     <script type="module" src="/static/js/global.js"></script>
-    <script src="/static/js/cco-informa.js" defer></script>
+    <script type="module" src="/static/js/cco-informa.js" defer></script>
     <script type="module" src="/static/js/font-awesome.js"></script>
 </head>
 <body>
@@ -15,8 +15,13 @@
             <h1>*CCO INFORMA*</h1>
             <caption>Histórico de Eventos</caption>
             <ul class="letters">
-                <li><div class="id"></div></li>{% for letter in letters %}
-                <li>{{ letter }}</li>{% endfor %}
+                <li><div class="id"></div><button class="expand" id="expand-_">
+                    <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                </button>
+                </li>{% for letter in letters %}
+                <li><span>{{ letter }}</span><button class="expand" id="expand-{{ letter }}">
+                    <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                </button></li>{% endfor %}
             </ul>
             <ul>
                 <li>1</li>{% for col in cols %}
