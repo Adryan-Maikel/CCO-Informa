@@ -1,6 +1,6 @@
 @import "./global.css";
 :root{
-    --c-_: 30px;
+    /* --c-_: 30px;
     --c-A: 80px;
     --c-B: 80px;
     --c-C: 55px;
@@ -11,38 +11,33 @@
     --c-H: 312px;
     --c-I: 215px;
     --c-J: 400px;
-    --c-K: 80px;
-    --sum: calc(var(--c-_) + var(--c-A) + var(--c-B) + var(--c-C) + var(--c-D) + var(--c-E) + var(--c-F) + var(--c-G) + var(--c-H) + var(--c-I) + var(--c-J) + var(--c-I)var(--c-K));
+    --c-K: 80px; */
+    /* --sum: calc(var(--c-_) + var(--c-A) + var(--c-B) + var(--c-C) + var(--c-D) + var(--c-E) + var(--c-F) + var(--c-G) + var(--c-H) + var(--c-I) + var(--c-J) + var(--c-K)); */
 }
 body{
-    border: 1px solid var(--dark);
-    padding: 8px;
     overflow: hidden;
-    height: 100vh;
 }
-
 cco-informa{
     position: absolute;
-    width: calc(100% - 16px);
     height: calc(100% - 20px);
     overflow-x: scroll;
-}
-
-/* cco-informa{
-    width: var(--sum);
-    height: calc(100% - 31px);
-    display: block;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    position: absolute;
-    padding: 1px;
     border: 1px solid var(--dark);
-} */
-header{
-    width: var(--sum);
-    display: block;
-    top: 0;
+    padding: 8px;
+}
+li .id{
+    width: calc(var(--_) - 2px);
+    height: calc(100% - 4px);
     position: absolute;
+    top: 2px;
+    left: 2px;
+    background: var(--dark);
+    opacity: 0.1;
+}
+header{
+    width: auto;
+    display: block;
+    position: absolute;
+    top: 0;
     z-index: 13;
     background: var(--white);
 }
@@ -54,7 +49,6 @@ header ul:nth-child(3) li{
 section{
     position: absolute;
     top: 80px;
-    /* width: var(--sum); */
     height: calc(100vh - 125px);
     overflow-y: scroll;
     overflow-x: hidden;
@@ -63,32 +57,19 @@ input, #cco-informa ul li:nth-child(1){padding: 5px}
 ul{display: flex;position: relative;}
 li{display: inline-block;border: 1px solid var(--dark);margin: 1px;}
 /* .letters{height: 35px;} */
-li:nth-child(1){width: var(--c-_);}
 
-#cco-informa ul li:nth-child(1){
-    width: var(--c-_);text-align: right;}
-#cco-informa ul li:nth-child(2){/*Data*/
-    width: var(--c-A);text-align: center;}
-#cco-informa ul li:nth-child(3){/*Tabela*/
-    width: var(--c-B);text-align: center;}
-#cco-informa ul li:nth-child(4){/*Tabela*/
-    width: var(--c-C);text-align: center;}
-#cco-informa ul li:nth-child(5){/*Tabela*/
-    width: var(--c-D);text-align: center;}
-#cco-informa ul li:nth-child(6){/*Tabela*/
-    width: var(--c-E);text-align: center;}
-#cco-informa ul li:nth-child(7){/*Tabela*/
-    width: var(--c-F);text-align: center;}
-#cco-informa ul li:nth-child(8){/*Tabela*/
-    width: var(--c-G);text-align: center;}
-#cco-informa ul li:nth-child(9){/*Tabela*/
-    width: var(--c-H);text-align: center;}
-#cco-informa ul li:nth-child(10){/*Tabela*/
-    width: var(--c-I);text-align: center;}
-#cco-informa ul li:nth-child(11){/*Tabela*/
-    width: var(--c-J);text-align: center;}
-#cco-informa ul li:nth-child(12){/*Tabela*/
-    width: var(--c-K);text-align: center;}
+/*vazio*/#cco-informa ul li:nth-child(1){width: var(--_);text-align: right;}
+/*Data*/#cco-informa ul li:nth-child(2){width: var(--A);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(3){width: var(--B);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(4){width: var(--C);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(5){width: var(--D);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(6){width: var(--E);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(7){width: var(--F);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(8){width: var(--G);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(9){width: var(--H);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(10){width: var(--I);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(11){width: var(--J);text-align: center;}
+/*Tabela*/#cco-informa ul li:nth-child(12){width: var(--K);text-align: center;}
 
 
 
