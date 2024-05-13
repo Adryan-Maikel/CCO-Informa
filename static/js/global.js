@@ -20,7 +20,7 @@ function toogle_option_menu(configurations, option){
 
 /* DARK-MODE */
 function load_dark_mode(configurations){
-    const colors={white:"#EDEDED","dark":"#05081A"}
+    const colors={white:"#EDEDED","dark":"#07156B"}
     const element=document.documentElement;
     if(configurations.dark_mode){
         element.style.setProperty("--white", colors.dark);
@@ -34,32 +34,37 @@ function load_dark_mode(configurations){
 /* CURSOR */
 const CURSORS={
     default:"/static/assets/normal.cur",danger:"/static/assets/unavailable.cur",link:"/static/assets/link.cur",
-    move:"/static/assets/move.cur",scroll_x:"/static/assets/horizontal.cur",scroll_y:"/static/assets/vertical.cur"
+    move:"/static/assets/move.cur",scroll_x:"/static/assets/horizontal.cur",scroll_y:"/static/assets/vertical.cur",
+    precision:"/static/assets/precision.cur"
 }
 function set_cursor(cursor){return document.documentElement.style.setProperty("--cursor", `url(${cursor}), auto`)}
+
+function mouseenter(event){
+    event.target.addEventListener("mouseout", mouseout);
+    set_cursor(CURSORS.default);
+    if(event.target.classList.contains("expand")){set_cursor(CURSORS.scroll_x);return};
+    set_cursor(event.target.disabled?CURSORS.danger:CURSORS.link);
+}
+function mouseout(event){
+    set_cursor(CURSORS.default);
+    event.target.removeEventListener("mouseout", mouseout);
+}
 
 function load_cursor(configurations){
     if(!configurations.cursor_personalizado)return;
     set_cursor(CURSORS.default);
     document.addEventListener("mousedown",(event)=>{if(event.button!=0)event.preventDefault()});
     document.querySelectorAll("button").forEach(button=>{
-        button.addEventListener("mouseenter", event=>{
-            set_cursor(event.target.disabled?CURSORS.danger:CURSORS.link);
-            if(event.target.classList.contains("expand"))set_cursor(CURSORS.scroll_x);
-            button.addEventListener("mouseout", _=>set_cursor(CURSORS.default))
-        })
+        button.addEventListener("mouseenter", mouseenter);
     });
     document.querySelectorAll("input").forEach(input=>{
-        if(input.disabled){
-            const parent=input.parentElement;
-            parent.addEventListener("mouseenter", _=>{
-                set_cursor(CURSORS.danger);
-                parent.addEventListener("mouseout", _=>set_cursor(CURSORS.default))
-            })
-        }
+        const parent = input.parentElement;
+        parent.addEventListener("mouseenter", _=>{
+            if(input.disabled)set_cursor(CURSORS.danger);
+            parent.addEventListener("mouseout", mouseout)
+        })
     })
 }
-
 
 const configurations=load_cookie_configurations()
 load_dark_mode(configurations)

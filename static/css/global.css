@@ -9,7 +9,7 @@ body{width: 100vw;height: 100vh;}
 header,footer,input,button{width: 100%;}
 input,button{background-color: var(--white);color: var(--dark);}
 input{border: none;outline: none;}
-input:disabled{opacity: .5;pointer-events: none;}
+button:disabled,input:disabled{opacity: .5;pointer-events: none;}
 button{border-color: var(--white);outline-color: var(--white);}
 .icons button{width: 25px;height: 25px;}
 button i{pointer-events: none;font-weight: bold;}
@@ -24,6 +24,9 @@ i.fa-check,.color-green{color: var(--green)}
 .center{justify-content: center;align-items: center;}
 .around{justify-content: space-around;}
 
-::-webkit-scrollbar{width: 8px;}
+::-webkit-scrollbar{width: 8px;
+    outline: 2px dashed cornflowerblue;
+    display: block;
+    height: 10px;}
 ::-webkit-scrollbar-thumb{border-radius: 4px;background-color: var(--dark)}
 ::-webkit-scrollbar-track{background-color: var(--white)}

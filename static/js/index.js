@@ -5,6 +5,13 @@ window.document.title = "INFORMA"
 
 var _configurations = configurations;
 
+// load
+
+const overlay = document.getElementById("overlay");
+document.querySelector("iframe").addEventListener("load", ()=>{
+    overlay.style.left = "-100%";
+});
+
 const menu_config = document.getElementById("menu-configurations");
 const confirm_button = document.getElementById("confirm-config");
 const cancel_button = document.getElementById("cancel-config");

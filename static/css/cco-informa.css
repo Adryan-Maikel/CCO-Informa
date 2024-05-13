@@ -7,19 +7,22 @@ cco-informa{
     height: 100%;
     overflow-x: scroll;
     border: 1px solid var(--dark);
-    padding: 8px;
+    padding: 5px;
 }
 ul.letters{
     height: 22px;
 }
+ul.letters ~ ul{
+    height: 40px;
+}
+header ul,ul li:nth-child(1){background-color: var(--white);background-blend-mode: darken;}
+ul.letters ~ ul
 li .id{
     width: calc(var(--_));
     height: calc(100% - 4px);
     position: absolute;
     top: 2px;
     left: 2px;
-    background: var(--dark);
-    opacity: 0.1;
 }
 li span{position: relative;display: inline-block;width: calc(100% - 12px);height: 100%;}
 li button.expand{
@@ -38,7 +41,6 @@ header{
     width: auto;
     display: block;
     position: absolute;
-    top: 0;
     z-index: 13;
     background: var(--white);
 }
@@ -48,29 +50,59 @@ header ul:nth-child(3) li{
     justify-content: center;
 }
 section{
-    position: absolute;
-    top: 80px;
-    height: calc(100vh - 100px);
-    overflow-y: scroll;
-    overflow-x: hidden;
+    position: absolute;top: 99px;height: calc(100vh - 113px);
+    overflow-y: scroll;overflow-x: hidden;
 }
 input, #cco-informa ul li:nth-child(1){padding: 5px}
 ul{display: flex;position: relative;}
 li{display: inline-block;border: 1px solid var(--dark);margin: 1px;}
 /* .letters{height: 35px;} */
+input{height: 100%;}
 
 /*vazio*/#cco-informa ul li:nth-child(1){width: var(--_);text-align: right;}
 /*Data*/#cco-informa ul li:nth-child(2){width: var(--A);text-align: center;}
 /*Tabela*/#cco-informa ul li:nth-child(3){width: var(--B);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(4){width: var(--C);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(5){width: var(--D);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(6){width: var(--E);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(7){width: var(--F);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(8){width: var(--G);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(9){width: var(--H);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(10){width: var(--I);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(11){width: var(--J);text-align: center;}
-/*Tabela*/#cco-informa ul li:nth-child(12){width: var(--K);text-align: center;}
+/*Linha*/#cco-informa ul li:nth-child(4){width: var(--C);text-align: center;}
+/*Carro*/#cco-informa ul li:nth-child(5){width: var(--D);text-align: center;}
+/*Carro Substituto*/#cco-informa ul li:nth-child(6){width: var(--E);text-align: center;}
+/*Hora*/#cco-informa ul li:nth-child(7){width: var(--F);text-align: center;}
+/*Sentido*/#cco-informa ul li:nth-child(8){width: var(--G);text-align: center;}
+/*Ocorrência*/#cco-informa ul li:nth-child(9){width: var(--H);text-align: center;}
+/*Problema*/#cco-informa ul li:nth-child(10){width: var(--I);text-align: center;}
+/*Observação*/#cco-informa ul li:nth-child(11){width: var(--J);text-align: center;}
+/*Operador*/#cco-informa ul li:nth-child(12){width: var(--K);text-align: center;}
 
-
-
+.table-title{
+    height: 32px;
+    align-items: center;
+    padding: 0 10px;
+}
+.table-title span{
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--dark);
+}
+#edit-rows-btn {
+    gap: 5px;
+    position: absolute;
+    top: -35px;
+    padding: 2px;
+    background-color: var(--white);
+    transition: top .5s ease-in-out;
+    border: 1px solid var(--dark);
+}
+#edit-rows-btn.revel {
+    top: 5px;
+}
+#edit-rows-btn button{
+    display: flex;padding: 3px;gap: 3px;height: fit-content;width: fit-content;}
+#edit-rows-btn button span{
+    font-size: 10px;
+    pointer-events: none;
+}
+#adicionar-row span{
+    width: 55px;
+}
+ul.remove input {
+    background: red;
+}

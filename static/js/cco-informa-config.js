@@ -5,11 +5,11 @@ function create_cookie_width_columns(){
     return JSON.parse(decodeURIComponent(width_columns));
 }
 function update_cookie_width_columns(new_width_columns){
-    document.cookie=`columns=${JSON.stringify(new_width_columns)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;window.location.reload()
+    document.cookie=`columns=${JSON.stringify(new_width_columns)}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`
 }
 function load_cookie_width_columns(){
     return document.cookie.split(";").find(cookie=>cookie.trim().startsWith("columns="))
     ?JSON.parse(decodeURIComponent(document.cookie.split(";").find(cookie=>cookie.trim().startsWith("columns=")).split("=")[1]))
     :create_cookie_width_columns()
 }
-export { width_columns_default, update_cookie_width_columns, load_cookie_width_columns };
+export{ width_columns_default, update_cookie_width_columns, load_cookie_width_columns };

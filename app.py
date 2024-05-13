@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
 from gsheets import INFORMATIONS as INFO
 
+COLS_CCO_INFORMA = INFO["cco-informa"]["cols"]()
+LETTERS = "A B C D E F G H I J K".split()
+
 app = Flask(__name__)
 
 
@@ -14,10 +17,8 @@ def open(sheet: str) -> str:
     if sheet == "cco-informa":
         ROWS = [[_i, *data]
                 for _i, data in enumerate(INFO[sheet]["get"](), 2)]
-        _sheet = render_template("cco-informa.html", table=sheet, rows=ROWS,
-                                 cols=INFO[sheet]["cols"](),
-                                 letters="A B C D E F G H I J K".split())
-        return _sheet
+        return render_template("cco-informa.html", table=sheet, rows=ROWS,
+                               cols=COLS_CCO_INFORMA, letters=LETTERS)
         # return render_template("edit.html", table=_sheet)
     if sheet not in INFO:
         ERRO = "Não deveria fazer isso."
@@ -73,16 +74,28 @@ def add(sheet: str) -> str:
     if not row.isnumeric():
         ERRO = f"Row {row} não é um número."
         return render_template("error.html", erro=ERRO)
+    row = int(row)
     direction = request.form.get("direction")
-
+    if sheet == "cco-informa":
+        values = {}
+        for letter in "A B C D E F G H I J K".split():
+            input = request.form.get(letter)
+            if input:
+                values[letter] = input
+        INFO[sheet]["add"](direction, row, values)
+        ROWS = [[_i, *data]
+                for _i, data in enumerate(INFO[sheet]["get"](), 2)]
+        return render_template("cco-informa.html", table=sheet, rows=ROWS,
+                               cols=COLS_CCO_INFORMA, letters=LETTERS)
+    
     if sheet == "operadores":
         operator = request.form.get("operadores")
         cracha = request.form.get("cracha")
-        INFO[sheet]["add"](direction, int(row), operator, cracha)
+        INFO[sheet]["add"](direction, row, operator, cracha)
         return open(sheet)
 
     value = request.form.get(sheet)
-    INFO[sheet]["add"](direction, int(row), value)
+    INFO[sheet]["add"](direction, row, value)
     return open(sheet)
 
 

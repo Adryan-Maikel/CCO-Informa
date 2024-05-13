@@ -22,44 +22,22 @@
     
         <div id="menu-configurations">
             <h3>Configurações</h3>
+            <div class="row buttons">
+                <button id="dark-mode"> <span id="span-dark-mode" class="color-green">Dark-Mode</span><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+                <button id="cursor"><span id="span-cursor" class="color-green">Cursor Pers.</span><i class="fa-solid fa-arrow-pointer" aria-hidden="true"></i></button>
+            </div>
+            <div class="row buttons">
+                <button id="restore-cco-informa"><span id="span-restore-columns-cco-informa" class="color-red">Restaurar tamanho das colunas</span><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i></button>
+            </div>
             <div class="row">
                 <div class="buttons icons">
-                    <div class="row">
-                        <span id="span-dark-mode" class="">Dark-Mode</span>
-                        <button id="dark-mode"><i class="fa-solid fa-moon"></i></button>
-                    </div>
+                    <button id="confirm-config"><i class="fa-solid fa-check" aria-hidden="true"></i></button>
                 </div>
-
                 <div class="buttons icons">
-                    <div class="row">
-                        <span id="span-cursor" class="">Cursor Pers.</span>
-                        <button id="cursor"><i class="fa-solid fa-arrow-pointer"></i></button>
-                    </div>
+                    <button id="cancel-config"><i class="fa-solid fa-cancel" aria-hidden="true"></i></button>
                 </div>
             </div>
-
-            
-            <div class="row">
-                <div class="buttons icons">
-                    <span id="span-restore-columns-cco-informa">Restaurar tamanho das colunas:</span>
-                    <button id="restore-cco-informa"><i class="fa-solid fa-arrow-rotate-left"></i></button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="buttons icons">
-                    <button id="confirm-config"><i class="fa-solid fa-check"></i></button>
-                </div>
-                <div class="buttons icons">
-                    <button id="cancel-config"><i class="fa-solid fa-cancel"></i></button>
-                </div>
-            </div>
-
         </div>
-
-    <div class="row">
-
-    </div>
 
     </header>
     
@@ -67,7 +45,7 @@
 
         <section class="col">
             <h2>*CCO Informa*</h2>
-    
+            <div id="overlay"></div>
             <iframe src="/sheets/cco-informa" frameborder="0"></iframe>
         </section>
     </main>

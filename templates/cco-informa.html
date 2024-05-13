@@ -7,38 +7,60 @@
     <link rel="stylesheet" href="/static/css/cco-informa.css">
     <script type="module" src="/static/js/global.js"></script>
     <script type="module" src="/static/js/cco-informa.js" defer></script>
+    <script src="/static/js/cco-informa-btns-sheet.js" defer></script>
     <script type="module" src="/static/js/font-awesome.js"></script>
 </head>
 <body>
     <cco-informa id="cco-informa" class="bg-white">
+        <div class="row table-title">
+            <span>Histórico de Eventos</span>
+            <div id="edit-rows-btn" class="row">
+                <button id="confirm-edit" disabled="true">
+                    <span>CONFIRMAR</span>
+                    <i class="fa-solid fa-check"></i>
+                </button>
+                <button id="cancel-edit">
+                    <span>CANCELAR</span>
+                    <i class="fa-solid fa-cancel"></i>
+                </button>
+                <button id="add-bottom">
+                    <i class="fa-solid fa-plus"></i>
+                    <i class="fa-solid fa-caret-down"></i>
+                </button>
+                <button id="add-top">
+                    <i class="fa-solid fa-plus"></i>
+                    <i class="fa-solid fa-caret-up"></i>
+                </button>
+                <button id="excluir-row">
+                    <span>EXCLUIR</span>
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
         <header>
             <h1>*CCO INFORMA*</h1>
-            <caption>Histórico de Eventos</caption>
             <ul class="letters">
-                <li><div class="id"></div><button class="expand" id="expand-_">
+                <li class="_"><div class="id"></div><button class="expand" id="expand-_">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </button>
                 </li>{% for letter in letters %}
-                <li><span>{{ letter }}</span><button class="expand" id="expand-{{ letter }}">
+                <li class="{{ letter }}"><span>{{ letter }}</span><button class="expand" id="expand-{{ letter }}">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </button></li>{% endfor %}
             </ul>
             <ul>
-                <li>1</li>{% for col in cols %}
-                <li><strong>{{ col }}</strong></li>{% endfor %}
+                <li class="_">1</li>{% for col in cols %}
+                <li class="{{ letters[loop.index - 1] }}"><strong>{{ col }}</strong></li>{% endfor %}
             </ul>
         </header>
         <section>{% for row in rows %}
-            <ul>{% for cell in row %}
-                <li>{% if loop.first %}{{ cell }}{% else %}<input type="text" value="{{ cell }}">{% endif %}</li>{% endfor %}
+            <ul id="row-{{ row[0] }}">{% for cell in row %}
+                <li class="{{ letters[loop.index - 2] if not loop.first else '_' }}">{% if loop.first %}{{ cell }}{% else %}<input type="text" id="cell-{{ letters[loop.index - 2] }}-{{ row[0] }}" value="{{ cell }}" disabled="true">{% endif %}</li>{% endfor %}
             </ul>{% endfor %}
-
         </section>
-
         <footer>
-            <div class="bar-progress-full"></div>
-        </footer>
 
+        </footer>
     </cco-informa>
 </body>
 </html>

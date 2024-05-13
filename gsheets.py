@@ -58,6 +58,28 @@ def update_operator(row: str, operator: str, cracha: str) -> None:
         WS_DADOS.update_acell(f"E{row}", cracha)
 
 
+def update_row_cco_informa(row, values):
+    for col, value in values.items():
+        WS_CCO_INFORMA.update_acell(f"{col}{row}", value)
+
+
+def add_row_cco_informa(direction, row, values):
+    if direction == "bottom":
+        row += 1
+
+    WS_CCO_INFORMA.cut_range(f"A{row}:K", f"A{row+1}:K")
+    WS_CCO_INFORMA.cut_range(f"A{row+1}:K", f"A{row}:K",
+                             paste_type="PASTE_FORMAT")
+
+    if not values:
+        return
+    update_row_cco_informa(row, values)
+
+
+def delete_row_cco_informa(row):
+    WS_CCO_INFORMA.cut_range(f"A{row+1}:K", f"A{row}:K")
+
+
 INFORMATIONS = {}
 INTERVALS = [["ocorrencias", "A"], ["problemas", "B"], ["sentidos", "C"]]
 for name, col in INTERVALS:
@@ -83,7 +105,10 @@ INFORMATIONS["operadores"] = {
 
 INFORMATIONS["cco-informa"] = {
     "cols": lambda: WS_CCO_INFORMA.get_values("A1:K1")[0],
-    "get": lambda: WS_CCO_INFORMA.get_values("A2:K")
+    "get": lambda: WS_CCO_INFORMA.get_values("A2:K"),
+    "add": lambda dir, row, values: add_row_cco_informa(dir, row, values),
+    "del": lambda row: delete_row_cco_informa(row),
+    "upd": lambda row, values: update_row_cco_informa(row, values)
 }
 
 if __name__ == "__main__":

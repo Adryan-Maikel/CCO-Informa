@@ -1,9 +1,20 @@
 @import "./global.css";
 
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 header, footer{height: 50px;padding: 10px 0}
+i.fa-solid.fa-gear {
+    font-size: 17px;
+}
 #menu-configurations{
     width: auto;
-    max-width: calc(100% - 10px);
+    max-width:  calc(100% - 19px);
     height: auto;
     padding: 0 10px 15px 10px;
     position: absolute;
@@ -18,6 +29,8 @@ header, footer{height: 50px;padding: 10px 0}
 }
 #menu-configurations.revel{left: 10px;scale: 1;}
 #menu-configurations h3{width: 100%;padding: 2px 0;text-align: center;}
+#menu-configurations .row{margin-top: 3px;gap: 3px;flex-wrap: wrap;}
+#menu-configurations button{padding: 4px;width: auto;}
 .buttons span{font-weight: bold;padding-right: 2px;}
 section{
     width: 100%;
