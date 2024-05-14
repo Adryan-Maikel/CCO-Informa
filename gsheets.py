@@ -58,7 +58,7 @@ def update_operator(row: str, operator: str, cracha: str) -> None:
         WS_DADOS.update_acell(f"E{row}", cracha)
 
 
-def update_row_cco_informa(row, values):
+def update_row_cco_informa(row, values: dict[str, str | int]):
     for col, value in values.items():
         WS_CCO_INFORMA.update_acell(f"{col}{row}", value)
 
@@ -68,8 +68,10 @@ def add_row_cco_informa(direction, row, values):
         row += 1
 
     WS_CCO_INFORMA.cut_range(f"A{row}:K", f"A{row+1}:K")
-    WS_CCO_INFORMA.cut_range(f"A{row+1}:K", f"A{row}:K",
-                             paste_type="PASTE_FORMAT")
+    WS_CCO_INFORMA.copy_range(f"A{row+1}:K{row+1}", f"A{row}:K{row}",
+                              paste_type="PASTE_DATA_VALIDATION")
+    WS_CCO_INFORMA.copy_range(f"A{row+1}:K{row+1}", f"A{row}:K{row}",
+                              paste_type="PASTE_FORMAT")
 
     if not values:
         return
@@ -77,7 +79,8 @@ def add_row_cco_informa(direction, row, values):
 
 
 def delete_row_cco_informa(row):
-    WS_CCO_INFORMA.cut_range(f"A{row+1}:K", f"A{row}:K")
+    # WS_CCO_INFORMA.cut_range(f"A{row+1}:K", f"A{row}:K")
+    WS_CCO_INFORMA.delete_rows(row)
 
 
 INFORMATIONS = {}
@@ -111,10 +114,12 @@ INFORMATIONS["cco-informa"] = {
     "upd": lambda row, values: update_row_cco_informa(row, values)
 }
 
+
 if __name__ == "__main__":
     # print(INFORMATIONS["problemas"]["get"]())
     # print(WS_DADOS.get_values("B2:B"))
     # data = INFORMATIONS["cco-informa"]["cols"]()
-    for i in range(len(INFORMATIONS["cco-informa"]["cols"]())):
-        print(i)
+    # for i in range(len(INFORMATIONS["cco-informa"]["cols"]())):
+    #     print(i)
+
     pass

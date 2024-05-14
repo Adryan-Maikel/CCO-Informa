@@ -41,6 +41,17 @@ def edit(sheet: str) -> str:
     if sheet not in INFO:
         ERRO = "Não deveria fazer isso."
         return render_template("error.html", erro=ERRO)
+
+    if sheet == "cco-informa":
+        row = request.form.get("row")
+        values = {}
+        for letter in LETTERS:
+            values[letter] = request.form.get(letter)
+        INFO[sheet]["upd"](int(row), values)
+        ROWS = [[i, *data]for i, data in enumerate(INFO[sheet]["get"](), 2)]
+        return render_template("cco-informa.html", table=sheet, rows=ROWS,
+                               cols=COLS_CCO_INFORMA, letters=LETTERS)
+
     if sheet == "operadores":
         row = request.form.get("row")
         operator = request.form.get("operadores")
@@ -87,7 +98,6 @@ def add(sheet: str) -> str:
                 for _i, data in enumerate(INFO[sheet]["get"](), 2)]
         return render_template("cco-informa.html", table=sheet, rows=ROWS,
                                cols=COLS_CCO_INFORMA, letters=LETTERS)
-    
     if sheet == "operadores":
         operator = request.form.get("operadores")
         cracha = request.form.get("cracha")

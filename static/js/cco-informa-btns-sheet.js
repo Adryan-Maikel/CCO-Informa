@@ -1,4 +1,8 @@
+const overlay = document.getElementById("overlay");
+overlay.style.left = "-100%"
+
 var row_editing = null;
+var editing = null;
 
 const row_buttons_edit = document.getElementById("edit-rows-btn");
 
@@ -18,6 +22,7 @@ button_cancel_edit.addEventListener("click", ()=>{
     if(action)toggle_confirm();
     action = null;
     row_editing = null;
+    editing = null;
     row_buttons_edit.classList.remove("revel");
 });
 
@@ -62,12 +67,14 @@ button_confirm_edit.addEventListener("click", ()=>{
     }
     row_editing.querySelectorAll("input").forEach(input=>{
         var _input = document.createElement("input");
+
         _input.setAttribute("name", input.id.split("-")[1]);_input.setAttribute("value", input.value);
         form.appendChild(_input);
     })
     console.log(form);
     document.body.appendChild(form);
     form.submit();
+    overlay.style.left = "0"
 })
 
 function toggle_confirm(){
@@ -93,8 +100,10 @@ function edit_row(event){
     row_editing = event.target.tagName == "ul"?event.target:event.target.closest("ul");
     toggle_inputs_disabled(row_editing);get_value_inputs(row_editing);
     row_buttons_edit.classList.add("revel");
-    if(event.target.tagName != "ul")return input.focus();
+    if(event.target.tagName != "ul")input.focus();
+    document.addEventListener("input", _=>{if(!editing){toggle_confirm();editing = true;action = "/edit/cco-informa"}})
 }
+
 
 
 // aplicar filtros(_ >= 90){
