@@ -1,5 +1,5 @@
-const overlay = document.getElementById("overlay");
-overlay.style.left = "-100%"
+// const overlay = document.getElementById("overlay");
+// overlay.style.left = "-100%"
 
 var row_editing = null;
 var editing = null;
@@ -50,10 +50,12 @@ button_excluir_row.addEventListener("click", ()=>{
 })
 
 const form = document.createElement("form")
-button_confirm_edit.addEventListener("click", ()=>{
+button_confirm_edit.addEventListener("click", async()=>{
     if(row_editing == null)return;
-    const row = row_editing.id.replace("row-", "");
+    window.parent.postMessage("SUBMIT", "*");
+    await new Promise(resolve => setTimeout(resolve, 600));
 
+    const row = row_editing.id.replace("row-", "");
     form.setAttribute("action", action);
     form.setAttribute("method", "post");
     var _input = document.createElement("input");
@@ -74,7 +76,6 @@ button_confirm_edit.addEventListener("click", ()=>{
     console.log(form);
     document.body.appendChild(form);
     form.submit();
-    overlay.style.left = "0"
 })
 
 function toggle_confirm(){

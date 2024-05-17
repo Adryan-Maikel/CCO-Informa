@@ -53,6 +53,7 @@ function mouseout(event){
 function load_cursor(configurations){
     if(!configurations.cursor_personalizado)return;
     set_cursor(CURSORS.default);
+    return;
     document.addEventListener("mousedown",(event)=>{if(event.button!=0)event.preventDefault()});
     document.querySelectorAll("button").forEach(button=>{
         button.addEventListener("mouseenter", mouseenter);

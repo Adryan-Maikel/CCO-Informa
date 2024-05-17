@@ -5,19 +5,24 @@ window.document.title = "INFORMA"
 
 var _configurations = configurations;
 
-// load
-
 const overlay = document.getElementById("overlay");
-document.querySelector("iframe").addEventListener("load", ()=>{
+const iframe = document.querySelector("iframe");
+iframe.addEventListener("load", event=>{
     overlay.style.left = "-100%";
+    console.log("load")
 });
+
+window.addEventListener("message", event=>{
+    console.log(event.data)
+    overlay.style.left = "0";
+})
 
 const menu_config = document.getElementById("menu-configurations");
 const confirm_button = document.getElementById("confirm-config");
 const cancel_button = document.getElementById("cancel-config");
 const dark_mode_button = document.getElementById("dark-mode");
 const span_dark_mode = document.getElementById("span-dark-mode");
-const cursor_button = document.getElementById("cursor");
+const cursor_button = document.getElementById("button-cursor");
 const span_cursor = document.getElementById("span-cursor");
 const open_config = document.getElementById("open-config");
 const span_cco_informa = document.getElementById("span-restore-columns-cco-informa");

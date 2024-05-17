@@ -33,9 +33,13 @@ li button.expand{
     height: 100%;
     z-index: 15;
     border: none;
+    scale: 1;
+    transition: scale .5s, transform .5s;
 }
+li button.expand:hover{scale: 1.5;transform: translate(0, -1px);}
+li div.id ~ button.expand:hover{transform: translate(-1px, -1px);}
 button.expand i{color: var(--dark);}
-li div.id ~ button.expand {transform: translateX(-1px);}
+li div.id ~ button.expand {transform: translate(-1px);}
 i.fa-up-right-and-down-left-from-center{font-size: 10px;rotate: 45deg}
 header{
     width: auto;

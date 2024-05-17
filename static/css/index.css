@@ -13,6 +13,7 @@ i.fa-solid.fa-gear {
     top: 10px;
     left: -100%;
     scale: 0;
+    z-index: 1000;
     background-color: var(--white);
     box-shadow: 0 0 4px 1px var(--dark), inset 0px 0 5px 0px var(--dark);
     border-radius: 10px;
