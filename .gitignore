@@ -1,3 +1,12 @@
 __pycache__
 env/
 credentials.json
+.bashrc
+.gitconfig
+.ipython/
+.local/
+.profile
+.pythonstartup.py
+.vimrc
+.virtualenvs/
+README.txt
